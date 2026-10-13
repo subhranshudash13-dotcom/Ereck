@@ -1,0 +1,176 @@
+<%- include('partials/head', { title: (event ? event.title + ' | Electroreck' : 'Event Details | Electroreck') }) %>
+<%- include('partials/navbar') %>
+
+<style>
+  .event-detail-header {
+    padding: 120px 0 40px;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(circle at 50% 0%, rgba(234, 169, 67, 0.05) 0%, transparent 60%);
+  }
+  .event-detail-wrap {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    padding: 48px 0 80px;
+  }
+  .event-hero-banner {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+    background-color: #070707;
+  }
+  .event-hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .detail-card {
+    background: var(--black-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 30px;
+    position: sticky;
+    top: 100px;
+  }
+  @media (max-width: 900px) {
+    .event-detail-wrap {
+      grid-template-columns: 1fr;
+    }
+    .detail-card {
+      position: static;
+    }
+  }
+</style>
+
+<main>
+  <% if (!event) { %>
+    <section class="section" style="padding: 160px 0 100px; text-align: center;">
+      <div class="container">
+        <h2>Event Not Found</h2>
+        <p style="color: var(--text-muted); margin: 16px 0 32px;">The requested event may have been removed or does not exist.</p>
+        <a href="/" class="btn btn-primary">← Return to Events</a>
+      </div>
+    </section>
+  <% } else { 
+       const isClosed = event.registrationOpen === false;
+       const isFull = (event.registrationCount || 0) >= (event.capacity || 100);
+       const iconMap = { 'Technical': '⚡', 'Cultural': '🎭', 'Sports': '🏆' };
+       const icon = iconMap[event.category] || '⚡';
+  %>
+    <section class="event-detail-header">
+      <div class="container">
+        <div id="event-breadcrumb" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+          <a href="/" style="color: var(--gold);">Events</a> &nbsp;/&nbsp; <span><%= event.title %></span>
+        </div>
+        <h1 style="font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.15; margin-bottom: 8px;">
+          <%= event.title %>
+        </h1>
+        <p class="text-gold" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;">
+          <%= event.tagline || (event.category + ' Event') %>
+        </p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="event-detail-wrap">
+        
+        <!-- Left: Image & Description -->
+        <div class="event-left-info">
+          <div class="event-hero-banner">
+            <img 
+              src="<%= event.image || '/assets/events/technical.jpg' %>" 
+              alt="<%= event.title %>" 
+              onerror="this.onerror=null; this.src='/assets/events/technical.jpg';"
+            />
+          </div>
+
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">About This Event</h2>
+          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 28px;">
+            <%= event.description %>
+          </p>
+
+          <h3 style="font-size: 1.2rem; margin-bottom: 14px;">Event Guidelines & Details</h3>
+          <ul style="color: var(--text-muted); padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+            <li>Open to all registered engineering and university students.</li>
+            <li>Hands-on components and hardware kits are provided at the venue.</li>
+            <li>Certificates and event registration credentials will be verified at the check-in desk.</li>
+            <li>Free admission for all university participants.</li>
+          </ul>
+        </div>
+
+        <!-- Right: Registration & Info Card -->
+        <div class="event-right-sidebar">
+          <div class="detail-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <span class="badge-tag"><%= icon %> <%= event.category.toUpperCase() %></span>
+              <span class="status-indicator <%= isClosed ? 'status-closed' : isFull ? 'status-full' : 'status-open' %>">
+                <span class="status-dot"></span>
+                <span><%= isClosed ? 'Closed' : isFull ? 'Full' : 'Registrations Open' %></span>
+              </span>
+            </div>
+
+            <ul class="card-meta-list" style="border: none; padding: 0; margin-bottom: 24px;">
+              <li class="card-meta-item" style="font-size: 0.95rem; margin-bottom: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span><%= event.date %></span>
+              </li>
+              <li class="card-meta-item" style="font-size: 0.95rem; margin-bottom: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span><%= event.time %></span>
+              </li>
+              <li class="card-meta-item" style="font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span><%= event.venue %></span>
+              </li>
+            </ul>
+
+            <div style="margin-bottom: 20px; padding: 12px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+              <span>Entry Status</span>
+              <span style="color: <%= isClosed ? '#ff5252' : isFull ? '#eab042' : '#55df8c' %>; font-weight: 600;">
+                <%= isClosed ? 'Registrations Closed' : isFull ? 'Capacity Reached (Waitlist Only)' : 'Open to All Students' %>
+              </span>
+            </div>
+
+            <% if (isClosed) { %>
+              <button disabled class="btn btn-primary" style="width: 100%; opacity: 0.6; cursor: not-allowed;">
+                Registration Closed
+              </button>
+            <% } else if (isFull) { %>
+              <button disabled class="btn btn-primary" style="width: 100%; opacity: 0.6; cursor: not-allowed;">
+                Event Full
+              </button>
+            <% } else { %>
+              <a href="/register/<%= event._id %>" class="btn btn-primary" style="width: 100%; text-decoration: none; text-align: center;">
+                <span>Proceed to Registration</span>
+                <span>→</span>
+              </a>
+            <% } %>
+
+            <div style="margin-top: 18px; text-align: center;">
+              <a href="/#events" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none;">
+                ← Back to All Events
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

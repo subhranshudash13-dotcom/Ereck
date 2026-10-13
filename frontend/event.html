@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Electroreck Event Details & Registration" />
+  <title>Event Details | Electroreck</title>
+
+  <link rel="icon" type="image/png" href="/assets/logo/electrorec-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+
+  <!-- Pre-paint Theme Initializer to prevent flash -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('electrorec_theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    .event-detail-header {
+      padding: 60px 0 30px;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(circle at 50% 20%, rgba(234, 169, 67, 0.12), transparent 60%);
+    }
+    .event-detail-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      padding: 50px 0 80px;
+    }
+    .event-hero-banner {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .event-hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .detail-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      position: sticky;
+      top: 100px;
+    }
+    @media (max-width: 900px) {
+      .event-detail-wrap {
+        grid-template-columns: 1fr;
+      }
+      .detail-card {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/logo/electrorec-logo.png" alt="Electroreck Logo" class="brand-logo-img" onerror="this.src='/assets/logo/electrorec-logo.svg'" />
+        <div class="brand-text">
+          <span class="brand-name">Electroreck</span>
+          <span class="brand-sub">NIT Kurukshetra</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/#events" class="nav-link active">All Events</a></li>
+          <li><a href="/#about" class="nav-link">About</a></li>
+          <li><a href="/#faq" class="nav-link">FAQ</a></li>
+          <li class="mobile-only-item">
+            <a href="/admin" class="nav-link nav-admin-mobile">Admin Portal</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" aria-label="Toggle dark and light theme" title="Toggle theme">
+          <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Admin Portal Top Option -->
+        <a href="/admin" class="btn-nav-admin" id="nav-admin-btn">Admin Portal</a>
+
+        <a href="/" class="btn-nav-cta">
+          <span>← Back to Portal</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="event-detail-header">
+      <div class="container">
+        <div id="event-breadcrumb" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+          <a href="/" style="color: var(--gold);">Events</a> &nbsp;/&nbsp; <span id="breadcrumb-title">Event Details</span>
+        </div>
+        <h1 id="event-title-display" style="font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.15; margin-bottom: 8px;">
+          Loading Event...
+        </h1>
+        <p id="event-tagline-display" class="text-gold" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;">
+          ...
+        </p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="event-detail-wrap">
+        
+        <!-- Left: Image & Description -->
+        <div class="event-left-info">
+          <div class="event-hero-banner">
+            <img id="event-img-display" src="/assets/events/technical.jpg" alt="Event Banner" />
+          </div>
+
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">About This Event</h2>
+          <p id="event-desc-display" style="font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 28px;">
+            ...
+          </p>
+
+          <h3 style="font-size: 1.2rem; margin-bottom: 14px;">Event Guidelines & Details</h3>
+          <ul style="color: var(--text-muted); padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+            <li>Open to all registered engineering and university students.</li>
+            <li>Hands-on components and hardware are provided at the venue.</li>
+            <li>Certificates and event registration credentials will be verified at the check-in desk.</li>
+          </ul>
+        </div>
+
+        <!-- Right: Registration & Info Card -->
+        <div class="event-right-sidebar">
+          <div class="detail-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <span id="event-badge-display" class="badge-tag">⚡ TECHNICAL</span>
+              <span id="event-status-pill" class="status-indicator status-open">
+                <span class="status-dot"></span>
+                <span id="event-status-text">Registrations Open</span>
+              </span>
+            </div>
+
+            <ul class="card-meta-list" style="border: none; padding: 0; margin-bottom: 24px;">
+              <li class="card-meta-item" style="font-size: 0.95rem; margin-bottom: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span id="event-date-display">...</span>
+              </li>
+              <li class="card-meta-item" style="font-size: 0.95rem; margin-bottom: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="event-time-display">...</span>
+              </li>
+              <li class="card-meta-item" style="font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span id="event-venue-display">...</span>
+              </li>
+            </ul>
+
+            <div id="event-availability-box" style="margin-bottom: 20px; padding: 12px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+              <span>Entry Status</span>
+              <span id="event-entry-status-text" style="color: #55df8c; font-weight: 600;">Open to All Students</span>
+            </div>
+
+            <a id="btn-open-event-reg" href="/register.html" class="btn btn-primary" style="width: 100%; text-decoration: none; text-align: center;">
+              <span>Proceed to Registration</span>
+              <span>→</span>
+            </a>
+
+            <div style="margin-top: 18px; text-align: center;">
+              <a href="/#events" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none;">
+                ← Back to All Events
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- =====================
+       FOOTER
+  ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Mission -->
+        <div class="footer-col-brand">
+          <div class="footer-brand-heading">
+            <img src="/assets/logo/electrorec-logo.png" alt="Electroreck Emblem" class="footer-logo-img" onerror="this.src='/assets/logo/electrorec-logo.svg'" />
+            <div>
+              <div class="footer-brand-title">ELECTRORECK</div>
+              <div class="footer-brand-tag">NIT Kurukshetra</div>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            The premier university technical club of National Institute of Technology Kurukshetra. Fostering embedded robotics, IoT, creative circuit engineering, and student-driven innovation.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="mailto:contact@electroreck.club" class="social-link" aria-label="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="/#hero"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Home</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Explore Events</a></li>
+            <li><a href="/#about"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>About Electroreck</a></li>
+            <li><a href="/#why-electrorec"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Why Join Us</a></li>
+            <li><a href="/#faq"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>FAQ & Help</a></li>
+            <li><a href="/admin"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Organizer Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Event Tracks -->
+        <div>
+          <div class="footer-col-title">Event Tracks</div>
+          <ul class="footer-links-list">
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Technical & IoT</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Cultural & Visual Arts</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Tech-Sports & Robotics</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Hackathons & Expos</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Campus Headquarters -->
+        <div>
+          <div class="footer-col-title">Campus Hub</div>
+          <div class="footer-contact-card">
+            <div class="contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>National Institute of Technology Kurukshetra, Haryana 136119</span>
+            </div>
+            <div class="contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>contact@electroreck.club</span>
+            </div>
+            <div class="campus-status-pill">
+              <span class="campus-status-dot"></span>
+              <span>2026 Academic Season Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <div>© 2026 <strong>ELECTRORECK</strong> Technical Club. National Institute of Technology Kurukshetra.</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">Empowering tomorrow's engineers through hands-on innovation.</div>
+        </div>
+
+        <div class="footer-bottom-right">
+          <a href="/admin" class="footer-admin-link">
+            <span>🛡️ Organizer Console</span>
+            <span>→</span>
+          </a>
+          <button type="button" class="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+            <span>↑ Top</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      let eventId = params.get('id');
+
+      try {
+        if (!eventId) {
+          const events = await API.fetchEvents('All');
+          if (events && events.length > 0) {
+            eventId = events[0]._id;
+          }
+        }
+
+        const event = await API.fetchEventById(eventId);
+        if (event) {
+          document.title = `${event.title} | Electroreck`;
+          document.getElementById('breadcrumb-title').textContent = event.title;
+          document.getElementById('event-title-display').textContent = event.title;
+          document.getElementById('event-tagline-display').textContent = event.tagline || `${event.category} Event`;
+          document.getElementById('event-desc-display').textContent = event.description;
+          document.getElementById('event-date-display').textContent = event.date;
+          document.getElementById('event-time-display').textContent = event.time;
+          document.getElementById('event-venue-display').textContent = event.venue;
+          document.getElementById('event-badge-display').textContent = `⚡ ${event.category.toUpperCase()}`;
+          
+          const regCount = event.registrationCount || 0;
+          const capacity = event.capacity || 100;
+          const isClosed = event.registrationOpen === false;
+          const isFull = regCount >= capacity;
+
+          const statusPill = document.getElementById('event-status-pill');
+          const statusText = document.getElementById('event-status-text');
+          const entryStatusText = document.getElementById('event-entry-status-text');
+
+          if (isClosed) {
+            statusPill.className = 'status-indicator status-closed';
+            statusText.textContent = 'Closed';
+            entryStatusText.textContent = 'Registrations Closed';
+            entryStatusText.style.color = '#ff5252';
+          } else if (isFull) {
+            statusPill.className = 'status-indicator status-full';
+            statusText.textContent = 'Full';
+            entryStatusText.textContent = 'Capacity Reached (Waitlist Only)';
+            entryStatusText.style.color = '#eab042';
+          } else {
+            statusPill.className = 'status-indicator status-open';
+            statusText.textContent = 'Open';
+            entryStatusText.textContent = 'Open to All Students';
+            entryStatusText.style.color = '#55df8c';
+          }
+
+          document.getElementById('event-img-display').src = event.image || '/assets/events/technical.jpg';
+
+          const regBtn = document.getElementById('btn-open-event-reg');
+          regBtn.href = `/register.html?id=${event._id}`;
+
+          if (isFull || isClosed) {
+            regBtn.classList.add('disabled');
+            regBtn.style.pointerEvents = 'none';
+            regBtn.style.opacity = '0.6';
+            regBtn.innerHTML = isClosed ? 'Registration Closed' : 'Event Full (Waitlist Only)';
+          }
+        }
+      } catch (e) {
+        console.error('Error loading event detail:', e);
+      }
+    });
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

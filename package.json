@@ -1,0 +1,30 @@
+{
+  "name": "electroreck-event-platform",
+  "version": "1.0.0",
+  "description": "Premium University Technical Club Event Management Platform for Electroreck",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "seed": "node backend/seed.js"
+  },
+  "keywords": [
+    "electroreck",
+    "event-portal",
+    "university-club",
+    "express",
+    "mongodb",
+    "vanilla-js"
+  ],
+  "author": "Electroreck Technical Club",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^7.0.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.1"
+  }
+}

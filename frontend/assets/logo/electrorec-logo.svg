@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Radial subtle glow behind ER monogram -->
+    <radialGradient id="logoBgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141414" />
+      <stop offset="100%" stop-color="#020202" />
+    </radialGradient>
+    
+    <!-- Gold Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2C266" />
+      <stop offset="60%" stop-color="#EAA943" />
+      <stop offset="100%" stop-color="#C9892F" />
+    </linearGradient>
+
+    <!-- Path for circular perimeter text -->
+    <path id="textCircle" d="M 400,250 A 150,150 0 1,1 250,100" fill="none" />
+  </defs>
+
+  <!-- Outer Black Circle Container -->
+  <circle cx="250" cy="250" r="240" fill="url(#logoBgGlow)" stroke="#262626" stroke-width="4" />
+
+  <!-- Outer Gold Arc Crescent -->
+  <path d="M 270,38 A 210,210 0 1 0 240,462 C 120,462 70,360 70,250 C 70,140 130,50 270,38 Z" 
+        fill="none" 
+        stroke="url(#goldGrad)" 
+        stroke-width="26" 
+        stroke-linecap="round" />
+
+  <!-- Diagonal slice accent line across top to bottom -->
+  <line x1="270" y1="30" x2="238" y2="470" stroke="#020202" stroke-width="12" />
+
+  <!-- Inner Monogram E (White Futuristic Geometric) -->
+  <path d="M 195,145 L 340,145 L 325,185 L 210,185 L 205,225 L 305,225 L 290,265 L 195,265 L 185,310 L 330,310 L 315,350 L 140,350 L 175,180 Z" 
+        fill="#FFFFFF" />
+
+  <!-- Inner Monogram R (Electro Gold Geometric Polygon) -->
+  <path d="M 285,245 L 385,245 C 410,245 425,260 415,290 C 408,310 390,325 365,330 L 405,420 L 350,420 L 318,345 L 285,345 L 255,420 L 290,470" 
+        fill="url(#goldGrad)" 
+        stroke="#020202"
+        stroke-width="5" />
+  
+  <!-- Hole inside R -->
+  <polygon points="310,275 365,275 355,305 300,305" fill="#020202" />
+
+  <!-- Perimeter Curved Branding Text: ELECTRORECK -->
+  <text fill="#FFFFFF" font-family="'Space Grotesk', 'Inter', sans-serif" font-size="28" font-weight="700" letter-spacing="14">
+    <textPath href="#textCircle" startOffset="10%">
+      ELECTROREC
+    </textPath>
+  </text>
+</svg>

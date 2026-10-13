@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Register for Electroreck Club Events — NIT Kurukshetra" />
+  <title>Event Registration | Electroreck</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/logo/electrorec-logo.png" />
+
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+
+  <!-- Pre-paint Theme Initializer to prevent flash -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('electrorec_theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    .reg-page-section {
+      padding: 40px 0 90px;
+    }
+
+    .reg-breadcrumb-bar {
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .reg-breadcrumb-bar a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+
+    .reg-breadcrumb-bar a:hover {
+      color: var(--gold);
+    }
+
+    .reg-breadcrumb-bar span.active {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .reg-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.35fr;
+      gap: 36px;
+      align-items: flex-start;
+    }
+
+    /* Left Sidebar: Event Summary */
+    .reg-event-summary-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: sticky;
+      top: 96px;
+    }
+
+    .reg-event-image-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: #111;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .reg-event-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .reg-event-category-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(8px);
+    }
+
+    .reg-event-summary-content {
+      padding: 24px;
+    }
+
+    .reg-event-summary-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+
+    .reg-event-summary-tagline {
+      font-size: 0.88rem;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .reg-summary-meta-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+
+    .reg-summary-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .reg-summary-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .reg-event-notes {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .reg-event-notes strong {
+      color: var(--white);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .reg-view-details-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: gap 0.2s ease;
+    }
+
+    .reg-view-details-link:hover {
+      gap: 10px;
+    }
+
+    /* Right Column: Registration Form Card */
+    .reg-form-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 36px 32px;
+    }
+
+    .reg-form-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .reg-form-heading {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .reg-form-subheading {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Success Ticket Full Card */
+    .reg-ticket-full {
+      background: #080808;
+      border: 1px solid rgba(234, 169, 67, 0.4);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      margin: 24px 0;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .reg-ticket-full::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .ticket-chip-pass {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(234, 169, 67, 0.1);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      text-align: left;
+      font-size: 0.9rem;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .ticket-grid-item-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .ticket-grid-item-val {
+      font-size: 0.92rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .ticket-actions-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .reg-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .reg-event-summary-card {
+        position: static;
+      }
+
+      .reg-form-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================
+       NAVBAR
+  ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-link" id="nav-brand-logo">
+        <img src="/assets/logo/electrorec-logo.png" alt="Electroreck Logo" class="brand-logo-img" onerror="this.src='/assets/logo/electrorec-logo.svg'" />
+        <div class="brand-text">
+          <span class="brand-name">Electroreck</span>
+          <span class="brand-sub">NIT Kurukshetra</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/#events" class="nav-link">Events</a></li>
+          <li><a href="/#about" class="nav-link">About</a></li>
+          <li><a href="/#why-electrorec" class="nav-link">Why Join Us</a></li>
+          <li><a href="/#faq" class="nav-link">FAQ</a></li>
+          <li class="mobile-only-item">
+            <a href="/admin" class="nav-link nav-admin-mobile">Admin Portal</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" aria-label="Toggle dark and light theme" title="Toggle theme">
+          <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <a href="/admin" class="btn-nav-admin" id="nav-admin-btn">Admin Portal</a>
+        <a href="/#events" class="btn-nav-cta">
+          <span>← Back to Events</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================
+       MAIN REGISTRATION CONTENT
+  ===================== -->
+  <main>
+    <section class="reg-page-section">
+      <div class="container">
+        
+        <!-- Breadcrumb Bar -->
+        <div class="reg-breadcrumb-bar">
+          <a href="/">Home</a>
+          <span>/</span>
+          <a href="/#events">Events</a>
+          <span>/</span>
+          <a id="breadcrumb-event-link" href="#">Event Details</a>
+          <span>/</span>
+          <span class="active">Registration</span>
+        </div>
+
+        <div class="reg-layout">
+          
+          <!-- LEFT: Event Summary Sidebar -->
+          <aside class="reg-event-summary-card">
+            <div class="reg-event-image-wrap">
+              <img id="summary-event-img" src="/assets/events/technical.jpg" alt="Event Cover" />
+              <span id="summary-event-cat" class="reg-event-category-badge">⚡ TECHNICAL</span>
+            </div>
+
+            <div class="reg-event-summary-content">
+              <h2 id="summary-event-title" class="reg-event-summary-title">Loading Event Details...</h2>
+              <p id="summary-event-tagline" class="reg-event-summary-tagline">...</p>
+
+              <ul class="reg-summary-meta-list">
+                <li class="reg-summary-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span id="summary-event-date">Loading...</span>
+                </li>
+                <li class="reg-summary-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span id="summary-event-time">Loading...</span>
+                </li>
+                <li class="reg-summary-meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span id="summary-event-venue">Loading...</span>
+                </li>
+              </ul>
+
+              <!-- Live Registration Status -->
+              <div class="reg-status-box" style="margin-bottom: 18px; padding: 12px 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+                <span>Registration Status</span>
+                <span id="summary-capacity-text" class="status-indicator status-open"><span class="status-dot"></span> Open</span>
+              </div>
+
+              <div class="reg-event-notes">
+                <strong>📌 Registration Guidelines:</strong>
+                • Free entry for all students.<br />
+                • Bring your college student ID card on the event day.<br />
+                • Verified certificates will be issued after attendance check.
+              </div>
+
+              <a id="link-to-event-detail" href="#" class="reg-view-details-link">
+                <span>View Full Event Description & Guidelines</span>
+                <span>→</span>
+              </a>
+            </div>
+          </aside>
+
+          <!-- RIGHT: Student Registration Form & Confirmation -->
+          <section class="reg-form-card">
+            
+            <!-- FORM VIEW -->
+            <div id="page-form-view">
+              <div class="reg-form-header">
+                <h1 class="reg-form-heading">Student Registration</h1>
+                <p class="reg-form-subheading">Fill in your academic information to secure your seat for this event.</p>
+              </div>
+
+              <form id="standalone-reg-form" novalidate>
+                <input type="hidden" id="form-event-id" name="eventId" value="" />
+
+                <!-- Alert banner -->
+                <div id="form-alert-box" class="form-alert" role="alert"></div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                  <label for="input-name" class="form-label">Full Name <span class="req">*</span></label>
+                  <input type="text" id="input-name" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required />
+                </div>
+
+                <!-- Email & Phone -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-email" class="form-label">Email Address <span class="req">*</span></label>
+                    <input type="email" id="input-email" name="email" class="form-input" placeholder="name@domain.com" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="input-phone" class="form-label">Phone Number <span class="req">*</span></label>
+                    <input type="tel" id="input-phone" name="phone" class="form-input" placeholder="e.g. 9876543210" required />
+                  </div>
+                </div>
+
+                <!-- Roll Number & Academic Year -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-roll" class="form-label">College Roll Number <span class="req">*</span></label>
+                    <input type="text" id="input-roll" name="rollNumber" class="form-input" placeholder="e.g. 12213045" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="input-year" class="form-label">Academic Year <span class="req">*</span></label>
+                    <select id="input-year" name="year" class="form-select" required>
+                      <option value="">Select Academic Year</option>
+                      <option value="1st Year">1st Year (Freshman)</option>
+                      <option value="2nd Year">2nd Year (Sophomore)</option>
+                      <option value="3rd Year">3rd Year (Junior)</option>
+                      <option value="4th Year">4th Year (Senior)</option>
+                      <option value="Postgraduate">Postgraduate (M.Tech / PhD)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Department / Branch -->
+                <div class="form-group">
+                  <label for="input-branch" class="form-label">Department / Branch <span class="req">*</span></label>
+                  <input type="text" id="input-branch" name="branch" class="form-input" placeholder="e.g. Electrical Engineering / Electronics / Computer Science" required />
+                </div>
+
+                <!-- College / Institute -->
+                <div class="form-group">
+                  <label for="input-college" class="form-label">College / Institute</label>
+                  <input type="text" id="input-college" name="college" class="form-input" value="NIT Kurukshetra" />
+                </div>
+
+                <div style="margin-top: 28px;">
+                  <button type="submit" id="btn-submit-registration" class="btn-submit-reg">
+                    <span>Confirm & Complete Registration</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- SUCCESS CONFIRMATION VIEW -->
+            <div id="page-success-view" style="display: none;">
+              <!-- Rendered dynamically upon submission -->
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================
+       FOOTER
+  ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Mission -->
+        <div class="footer-col-brand">
+          <div class="footer-brand-heading">
+            <img src="/assets/logo/electrorec-logo.png" alt="Electroreck Emblem" class="footer-logo-img" onerror="this.src='/assets/logo/electrorec-logo.svg'" />
+            <div>
+              <div class="footer-brand-title">ELECTRORECK</div>
+              <div class="footer-brand-tag">NIT Kurukshetra</div>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            The premier university technical club of National Institute of Technology Kurukshetra. Fostering embedded robotics, IoT, creative circuit engineering, and student-driven innovation.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="mailto:contact@electroreck.club" class="social-link" aria-label="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="/#hero"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Home</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Explore Events</a></li>
+            <li><a href="/#about"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>About Electroreck</a></li>
+            <li><a href="/#why-electrorec"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Why Join Us</a></li>
+            <li><a href="/#faq"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>FAQ & Help</a></li>
+            <li><a href="/admin"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Organizer Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Event Tracks -->
+        <div>
+          <div class="footer-col-title">Event Tracks</div>
+          <ul class="footer-links-list">
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Technical & IoT</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Cultural & Visual Arts</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Tech-Sports & Robotics</a></li>
+            <li><a href="/#events"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>Hackathons & Expos</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Campus Headquarters -->
+        <div>
+          <div class="footer-col-title">Campus Hub</div>
+          <div class="footer-contact-card">
+            <div class="contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>National Institute of Technology Kurukshetra, Haryana 136119</span>
+            </div>
+            <div class="contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>contact@electroreck.club</span>
+            </div>
+            <div class="campus-status-pill">
+              <span class="campus-status-dot"></span>
+              <span>2026 Academic Season Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <div>© 2026 <strong>ELECTRORECK</strong> Technical Club. National Institute of Technology Kurukshetra.</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">Empowering tomorrow's engineers through hands-on innovation.</div>
+        </div>
+
+        <div class="footer-bottom-right">
+          <a href="/admin" class="footer-admin-link">
+            <span>🛡️ Organizer Console</span>
+            <span>→</span>
+          </a>
+          <button type="button" class="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+            <span>↑ Top</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      let eventId = params.get('id');
+
+      let currentEvent = null;
+
+      try {
+        if (!eventId) {
+          const events = await API.fetchEvents('All');
+          if (events && events.length > 0) {
+            eventId = events[0]._id;
+          }
+        }
+
+        currentEvent = await API.fetchEventById(eventId);
+        if (!currentEvent) {
+          throw new Error('Event not found');
+        }
+
+        // Populate event summary UI
+        document.title = `Register for ${currentEvent.title} | Electroreck`;
+        document.getElementById('form-event-id').value = currentEvent._id;
+        document.getElementById('breadcrumb-event-link').textContent = currentEvent.title;
+        document.getElementById('breadcrumb-event-link').href = `/event.html?id=${currentEvent._id}`;
+        document.getElementById('link-to-event-detail').href = `/event.html?id=${currentEvent._id}`;
+
+        document.getElementById('summary-event-title').textContent = currentEvent.title;
+        document.getElementById('summary-event-tagline').textContent = currentEvent.tagline || `${currentEvent.category} Event`;
+        document.getElementById('summary-event-cat').textContent = `⚡ ${currentEvent.category.toUpperCase()}`;
+        document.getElementById('summary-event-img').src = currentEvent.image || '/assets/events/technical.jpg';
+        document.getElementById('summary-event-date').textContent = currentEvent.date;
+        document.getElementById('summary-event-time').textContent = currentEvent.time;
+        document.getElementById('summary-event-venue').textContent = currentEvent.venue;
+
+        const regCount = currentEvent.registrationCount || 0;
+        const capacity = currentEvent.capacity || 100;
+        const isClosed = currentEvent.registrationOpen === false;
+        const isFull = regCount >= capacity;
+
+        const summaryStatus = document.getElementById('summary-capacity-text');
+        if (isClosed) {
+          summaryStatus.className = 'status-indicator status-closed';
+          summaryStatus.innerHTML = '<span class="status-dot"></span> Closed';
+        } else if (isFull) {
+          summaryStatus.className = 'status-indicator status-full';
+          summaryStatus.innerHTML = '<span class="status-dot"></span> Full';
+        } else {
+          summaryStatus.className = 'status-indicator status-open';
+          summaryStatus.innerHTML = '<span class="status-dot"></span> Open';
+        }
+
+        // Check if event is full or closed
+        if (regCount >= capacity || currentEvent.registrationOpen === false) {
+          const alertBox = document.getElementById('form-alert-box');
+          alertBox.className = 'form-alert error';
+          alertBox.textContent = currentEvent.registrationOpen === false 
+            ? 'Registration for this event is currently closed.' 
+            : 'This event has reached full capacity. No further registrations can be accepted.';
+          alertBox.style.display = 'block';
+
+          const submitBtn = document.getElementById('btn-submit-registration');
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registration Unavailable';
+          }
+        }
+      } catch (err) {
+        console.error('Error loading event for registration:', err);
+        document.getElementById('summary-event-title').textContent = 'Event Not Found';
+        const alertBox = document.getElementById('form-alert-box');
+        alertBox.className = 'form-alert error';
+        alertBox.textContent = 'Unable to load event details. Please return to the events catalog.';
+        alertBox.style.display = 'block';
+      }
+
+      // Handle form submission
+      const form = document.getElementById('standalone-reg-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const alertBox = document.getElementById('form-alert-box');
+        const submitBtn = document.getElementById('btn-submit-registration');
+
+        alertBox.style.display = 'none';
+
+        const name = document.getElementById('input-name').value.trim();
+        const email = document.getElementById('input-email').value.trim();
+        const phone = document.getElementById('input-phone').value.trim();
+        const rollNumber = document.getElementById('input-roll').value.trim();
+        const year = document.getElementById('input-year').value.trim();
+        const branch = document.getElementById('input-branch').value.trim();
+        const college = document.getElementById('input-college').value.trim() || 'NIT Kurukshetra';
+
+        if (!name || !email || !phone || !rollNumber || !year || !branch) {
+          alertBox.className = 'form-alert error';
+          alertBox.textContent = 'Please fill out all required fields marked with *.';
+          alertBox.style.display = 'block';
+          return;
+        }
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+          alertBox.className = 'form-alert error';
+          alertBox.textContent = 'Please enter a valid email address.';
+          alertBox.style.display = 'block';
+          return;
+        }
+
+        const cleanPhone = phone.replace(/[^0-9+]/g, '');
+        if (cleanPhone.length < 7) {
+          alertBox.className = 'form-alert error';
+          alertBox.textContent = 'Please enter a valid phone number (at least 7 digits).';
+          alertBox.style.display = 'block';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <span class="loading-spinner" style="width:16px;height:16px;border-width:2px;margin:0 6px 0 0;display:inline-block;vertical-align:middle;"></span>
+          Processing Registration...
+        `;
+
+        try {
+          const payload = {
+            eventId,
+            name,
+            email,
+            phone: cleanPhone,
+            rollNumber,
+            year,
+            branch,
+            college,
+          };
+
+          const result = await API.submitRegistration(payload);
+
+          if (!result.success) {
+            alertBox.className = 'form-alert error';
+            alertBox.textContent = result.message || 'Registration failed. Please check your details.';
+            alertBox.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Confirm & Complete Registration</span> <span>→</span>';
+            return;
+          }
+
+          // Show confirmation view
+          const formView = document.getElementById('page-form-view');
+          const successView = document.getElementById('page-success-view');
+
+          formView.style.display = 'none';
+          successView.style.display = 'block';
+
+          const reg = result.registration;
+
+          successView.innerHTML = `
+            <div class="success-view" style="padding: 10px 0;">
+              <div class="success-icon-wrap">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+              </div>
+
+              <h2 class="success-title">Registration Confirmed!</h2>
+              <p class="success-sub">Congratulations <strong>${reg.name}</strong>, your seat has been reserved.</p>
+
+              <div class="reg-ticket-full">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                  <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);">
+                    Official Admission Pass
+                  </div>
+                  <div class="ticket-chip-pass">${reg.registrationId}</div>
+                </div>
+
+                <div class="ticket-grid">
+                  <div>
+                    <div class="ticket-grid-item-label">Event</div>
+                    <div class="ticket-grid-item-val">${reg.eventTitle}</div>
+                  </div>
+                  <div>
+                    <div class="ticket-grid-item-label">Attendee Name</div>
+                    <div class="ticket-grid-item-val">${reg.name}</div>
+                  </div>
+                  <div>
+                    <div class="ticket-grid-item-label">Date & Time</div>
+                    <div class="ticket-grid-item-val">${reg.date} • ${reg.time}</div>
+                  </div>
+                  <div>
+                    <div class="ticket-grid-item-label">Roll Number</div>
+                    <div class="ticket-grid-item-val">${reg.rollNumber}</div>
+                  </div>
+                  <div>
+                    <div class="ticket-grid-item-label">Venue</div>
+                    <div class="ticket-grid-item-val">${reg.venue}</div>
+                  </div>
+                  <div>
+                    <div class="ticket-grid-item-label">Branch & Year</div>
+                    <div class="ticket-grid-item-val">${reg.branch} (${reg.year})</div>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+                  <span>🛡️ Status: <strong>Verified Registration</strong></span>
+                  <span>•</span>
+                  <span>Institute: ${reg.college}</span>
+                </div>
+              </div>
+
+              <div class="ticket-actions-bar">
+                <button type="button" class="btn btn-primary" onclick="window.print()" style="flex: 1;">
+                  <span>🖨️ Print / Save Pass</span>
+                </button>
+                <a href="/#events" class="btn btn-secondary" style="flex: 1;">
+                  <span>Browse More Events</span>
+                </a>
+              </div>
+            </div>
+          `;
+
+          // Scroll to top of form card
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+
+        } catch (err) {
+          console.error('Registration error:', err);
+          alertBox.className = 'form-alert error';
+          alertBox.textContent = 'A connection error occurred. Please verify your internet connection and try again.';
+          alertBox.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Confirm & Complete Registration</span> <span>→</span>';
+        }
+      });
+    });
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -210,7 +210,7 @@ html, body {
 
   .hero-title,
   .editorial-title {
-    font-size: clamp(2.36rem, 8.5vw, 3.26rem);
+    font-size: clamp(2.455rem, 8.5vw, 3.355rem);
     line-height: 1.08;
     margin-bottom: 12px;
   }
@@ -362,7 +362,7 @@ html, body {
   }
 
   .brand-name {
-    font-size: 1.14rem;
+    font-size: 1.235rem;
   }
 
   .brand-sub {
@@ -489,7 +489,11 @@ html, body {
 
   .hero-title,
   .editorial-title {
-    font-size: clamp(2.06rem, 9.8vw, 2.66rem);
+    font-size: clamp(2.155rem, 9.8vw, 2.755rem);
+  }
+
+  .brand-name {
+    font-size: 1.19rem;
   }
 
   .hero-tagline {
@@ -575,7 +579,7 @@ html, body {
 
   /* Footer */
   .footer-brand-title {
-    font-size: 1.18rem;
+    font-size: 1.275rem;
   }
 
   .footer-contact-card {

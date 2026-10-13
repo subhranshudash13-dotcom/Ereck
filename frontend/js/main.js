@@ -65,18 +65,42 @@ function setupMobileMenu() {
   const navMenu = document.getElementById('nav-menu');
 
   if (toggleBtn && navMenu) {
-    toggleBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      const isExpanded = navMenu.classList.contains('open');
-      toggleBtn.setAttribute('aria-expanded', isExpanded);
+    const toggleMenu = (forceClose = false) => {
+      if (forceClose) {
+        navMenu.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        navMenu.classList.toggle('open');
+        const isExpanded = navMenu.classList.contains('open');
+        toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      }
+    };
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
     });
 
-    // Close menu when clicking outside or clicking any nav link
+    // Close menu when clicking any nav link
     const navLinks = navMenu.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
+        toggleMenu(true);
       });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+        toggleMenu(true);
+      }
+    });
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+        toggleMenu(true);
+      }
     });
   }
 }
